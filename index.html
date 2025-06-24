@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mappa Interattiva con Audio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f0f0f0;
+      text-align: center;
+    }
+    .container {
+      position: relative;
+      max-width: 800px;
+      margin: auto;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+    .flash {
+      animation: flashEffect 0.3s ease;
+    }
+    @keyframes flashEffect {
+      0% { filter: brightness(1); }
+      50% { filter: brightness(2); transform: scale(1.05); }
+      100% { filter: brightness(1); transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<h1>Mappa Interattiva con Audio</h1>
+<div class="container">
+  <img src="immagine.jpg" usemap="#mappa" alt="Mappa" id="mappaImg">
+  <map name="mappa">
+    <!-- Area 1: numero 18 sull'occhio (cerchio centrato sull'iride) -->
+    <area shape="circle" coords="384,384,60" alt="18" onclick="playAudio(1)">
+
+    <!-- Area 2: ramo in basso a destra -->
+    <area shape="poly" coords="550,600,580,630,610,640,640,620,630,590,600,580" alt="Ramo" onclick="playAudio(2)">
+  </map>
+</div>
+
+<!-- Audio files -->
+<audio id="audio1" src="audio1.wav"></audio>
+<audio id="audio2" src="audio2.wav"></audio>
+
+<script>
+  function playAudio(n) {
+    const audio = document.getElementById('audio' + n);
+    const img = document.getElementById('mappaImg');
+    if (audio && img) {
+      audio.currentTime = 0;
+      audio.play();
+      img.classList.add('flash');
+      setTimeout(() => img.classList.remove('flash'), 300);
+    }
+  }
+</script>
+
+</body>
+</html>
